@@ -174,26 +174,6 @@ class CourierManager
         return $couriers[$alias];
     }
 
-    /**
-     * Executes an entry point for registered gateways, defined in routes.php file.
-     * @param  string $code Access point code
-     * @param  string $uri  Remaining uri parts
-     */
-    public static function runAccessPoint($code = null, $uri = null)
-    {
-        $params = explode('/', $uri);
-
-        $gateways = self::instance()->listGatewayObjects();
-        foreach ($gateways as $gateway) {
-            $points = $gateway->registerAccessPoints();
-
-            if (isset($points[$code]))
-                return $gateway->{$points[$code]}($params);
-        }
-
-        return Response::make('Access Forbidden', '403');
-    }
-
     //
     // Partials
     //

@@ -1,5 +1,6 @@
 <?php namespace Octommerce\Shipping;
 
+use Lang;
 use Backend;
 use RainLab\User\Models\User;
 use System\Classes\PluginBase;

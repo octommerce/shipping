@@ -1,4 +1,4 @@
-<?php namespace Octommerce\Classes\Classes;
+<?php namespace Octommerce\Shipping\Classes;
 
 use Str;
 use URL;
@@ -6,24 +6,24 @@ use File;
 use System\Classes\ModelBehavior;
 
 /**
- * Represents the generic payment type.
- * All other payment types must be derived from this class
+ * Represents the generic courier.
+ * All other courier must be derived from this class
  */
 class CourierBase extends ModelBehavior
 {
     use \System\Traits\ConfigMaker;
 
-    protected $invoiceModel = 'Responsiv\Pay\Models\Invoice';
+    protected $orderModel = 'Octommerce\Octommerce\Models\Order';
 
-    protected $invoiceStatusModel = 'Responsiv\Pay\Models\InvoiceStatus';
+    protected $orderStatusModel = 'Octommerce\Octommerce\Models\OrderStatus';
 
     /**
-     * Returns information about the payment type
+     * Returns information about the courier
      * Must return array:
-     * 
+     *
      * [
-     *      'name'        => 'Authorize.net',
-     *      'description' => 'Authorize.net simple integration method with hosted payment form.'
+     *      'name'        => 'FedEx',
+     *      'description' => 'FedEx simple integration method with hosted payment form.'
      * ]
      *
      * @return array
@@ -32,7 +32,7 @@ class CourierBase extends ModelBehavior
     {
         return [
             'name'        => 'Unknown',
-            'description' => 'Unknown payment gateway.'
+            'description' => 'Unknown courier.'
         ];
     }
 
@@ -40,6 +40,11 @@ class CourierBase extends ModelBehavior
      * @var mixed Extra field configuration for the payment type.
      */
     protected $fieldConfig;
+
+    /**
+     * @var string Regex pattern for AWB.
+     */
+    protected $AWBPattern = '/[A-z0-9 ]+/';
 
     /**
      * Constructor
@@ -108,17 +113,10 @@ class CourierBase extends ModelBehavior
     }
 
     /**
-     * Registers a hidden page with specific URL. Use this method for cases when you
-     * need to have a hidden landing page for a specific payment gateway. For example,
-     * PayPal needs a landing page for the auto-return feature.
-     * Important! Payment module access point names should have a prefix.
-     * @return array Returns an array containing page URLs and methods to call for each URL:
-     * return array('paypal_autoreturn'=>'processPaypalAutoreturn'). The processing methods must be declared
-     * in the payment type class. Processing methods must accept one parameter - an array of URL segments
-     * following the access point. For example, if URL is /paypal_autoreturn/1234 an array with single
-     * value '1234' will be passed to processPaypalAutoreturn method.
+     * Registers available services from this courier.
+     * @return array Returns an array containing list of available services.
      */
-    public function registerAccessPoints()
+    public function registerServices()
     {
         return [];
     }
@@ -132,58 +130,21 @@ class CourierBase extends ModelBehavior
     }
 
     /**
-     * Utility function, creates a link to a registered access point.
-     * @param  string $code Key used to define the access point
-     * @return string
-     */
-    public function makeAccessPointLink($code)
-    {
-        return URL::to('api_responsiv_pay/'.$code);
-    }
-
-    /**
      * Returns true if the payment type is applicable for a specified invoice amount
-     * @param float $amount Specifies an invoice amount
-     * @param $host Model object to add fields to
-     * @return true
-     */
-    public function isApplicable($amount, $host)
-    {
-        return true;
-    }
-
-    /**
-     * Processes payment using passed data.
      * @param array $data Posted payment form data.
-     * @param Model $host Type model object containing configuration fields values.
-     * @param Model $invoice Invoice model object.
+     * @param Model $cart Cart model object containing configuration fields values.
+     * @return array list of available services
      */
-    public function processPaymentForm($data, $host, $invoice) { }
-
-    /**
-     * This method is called before the payment form is rendered
-     * @param $host Model object containing configuration fields values
-     */
-    public function beforeRenderPaymentForm($host) { }
-
-    /**
-     * Creates an instance of the invoice model
-     */
-    protected function createInvoiceModel()
+    public function getAvailableServices($data, $cart)
     {
-        $class = '\\'.ltrim($this->invoiceModel, '\\');
-        $model = new $class();
-        return $model;
+        return $this->registerServices();
     }
 
     /**
-     * Creates an instance of the invoice status model
+     * Get the shipping cost from data.
+     * @param array $data Posted payment form data.
+     * @param Model $cart Cart model object containing configuration fields values.
      */
-    protected function createInvoiceStatusModel()
-    {
-        $class = '\\'.ltrim($this->invoiceStatusModel, '\\');
-        $model = new $class();
-        return $model;
-    }
+    public function getShippingCost($data, $cart) { }
+
 }
-
