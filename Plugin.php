@@ -17,8 +17,8 @@ class Plugin extends PluginBase
     public function pluginDetails()
     {
         return [
-            'name'        => 'Shipping',
-            'description' => 'No description provided yet...',
+            'name'        => Lang::get('octommerce.shipping::lang.name'),
+            'description' => Lang::get('octommerce.shipping::lang.description'),
             'author'      => 'Octommerce',
             'icon'        => 'icon-leaf'
         ];
@@ -82,8 +82,6 @@ class Plugin extends PluginBase
      */
     public function registerNavigation()
     {
-        return []; // Remove this line to activate
-
         return [
             'shipping' => [
                 'label'       => 'Shipping',
@@ -91,6 +89,10 @@ class Plugin extends PluginBase
                 'icon'        => 'icon-leaf',
                 'permissions' => ['octommerce.shipping.*'],
                 'order'       => 500,
+
+                'sideMenu' => [
+
+                ]
             ],
         ];
     }
