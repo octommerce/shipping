@@ -71,7 +71,7 @@ class CourierManager
     }
 
     /**
-     * Registers a callback function that defines a payment gateway.
+     * Registers a callback function that defines a courier.
      * The callback function should register gateways by calling the manager's
      * registerGateways() function. The manager instance is passed to the
      * callback function as an argument. Usage:
@@ -88,10 +88,10 @@ class CourierManager
     }
 
     /**
-     * Registers the payment gateways.
+     * Registers the courier.
      * The argument is an array of the gateway classes.
      * @param string $owner Specifies the menu items owner plugin or module in the format Author.Plugin.
-     * @param array $classes An array of the payment gateway classes.
+     * @param array $classes An array of the courier classes.
      */
     public function registerCouriers($owner, array $classes)
     {

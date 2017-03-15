@@ -1,6 +1,7 @@
 <?php namespace Octommerce\Shipping;
 
 use Backend;
+use RainLab\User\Models\User;
 use System\Classes\PluginBase;
 
 /**
@@ -8,6 +9,7 @@ use System\Classes\PluginBase;
  */
 class Plugin extends PluginBase
 {
+    public $require = ['Octommerce.Octommerce'];
 
     /**
      * Returns information about this plugin.
@@ -41,21 +43,11 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
-
-    }
-
-    /**
-     * Registers any front-end components implemented in this plugin.
-     *
-     * @return array
-     */
-    public function registerComponents()
-    {
-        return []; // Remove this line to activate
-
-        return [
-            'Octommerce\Shipping\Components\MyComponent' => 'myComponent',
-        ];
+        User::extend(function($model) {
+            $model->hasMany['addresses'] = [
+                'Octommerce\Shipping\Models\Address',
+            ];
+        });
     }
 
     /**
@@ -89,7 +81,6 @@ class Plugin extends PluginBase
                 'icon'        => 'icon-leaf',
                 'permissions' => ['octommerce.shipping.*'],
                 'order'       => 500,
-
                 'sideMenu' => [
 
                 ]
@@ -97,4 +88,31 @@ class Plugin extends PluginBase
         ];
     }
 
+    /**
+     * Registers any front-end components implemented in this plugin.
+     *
+     * @return array
+     */
+    public function registerComponents()
+    {
+        return [
+            'Octommerce\Shipping\Components\Locations' => 'locations',
+        ];
+    }
+
+    /**
+     * Register new Twig variables
+     * @return array
+     */
+    public function registerMarkupTags()
+    {
+        return [
+            'functions' => [
+                'form_select_province'    => ['Octommerce\Shipping\Models\Location', 'formSelectProvince'],
+                'form_select_city'        => ['Octommerce\Shipping\Models\Location', 'formSelectCity'],
+                'form_select_district'    => ['Octommerce\Shipping\Models\Location', 'formSelectDistrict'],
+                'form_select_subdistrict' => ['Octommerce\Shipping\Models\Location', 'formSelectSubdistrict'],
+            ]
+        ];
+    }
 }
