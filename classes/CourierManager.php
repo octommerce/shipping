@@ -133,7 +133,7 @@ class CourierManager
                 continue;
 
             $courierObj = new $courier->class;
-            $courierObj->courierDetails();
+            $courierDetails = $courierObj->courierDetails();
             $collection[$courier->alias] = (object)[
                 'owner'       => $courier->owner,
                 'class'       => $courier->class,
