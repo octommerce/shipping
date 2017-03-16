@@ -1,0 +1,25 @@
+<form data-request="{{ 'checkout::onSubmit' }}" data-request-flash>
+	<div class="row">
+		<div class="col-md-8 col-sm-6">
+			{% partial 'checkout::user-form' %}
+
+			{% if user.addresses|length %}
+			<div class="form-group">
+				<label>Select Address</label>
+				<select name="address_id" class="form-control">
+					<option>- Add New Address -</option>
+					{% for address in user.addresses %}
+					<option value="{{ address.id }}" {{ address.is_primary ? 'selected' : '' }}>{{ address.address_name }} - {{ address.street }}</option>
+					{% endfor %}
+				</select>
+			</div>
+			{% endif %}
+
+			{% partial __SELF__ ~ '::address-form' %}
+		</div>
+
+		<div class="col-md-4 col-sm-6">
+			{% partial 'checkout::summary' %}
+		</div>
+	</div>
+</form>

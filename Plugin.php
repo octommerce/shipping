@@ -97,7 +97,8 @@ class Plugin extends PluginBase
     public function registerComponents()
     {
         return [
-            'Octommerce\Shipping\Components\Locations' => 'locations',
+            'Octommerce\Shipping\Components\Locations'        => 'locations',
+            'Octommerce\Shipping\Components\CheckoutShipping' => 'checkoutShipping',
         ];
     }
 

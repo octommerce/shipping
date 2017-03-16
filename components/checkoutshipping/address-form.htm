@@ -1,0 +1,28 @@
+<div class="row">
+	<div class="col-md-6">
+		<div class="form-group is-required">
+			<label for="address">Receiver Name</label>
+			<input type="text" name="address[name]" class="form-control">
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="form-group is-required">
+			<label for="address">Receiver Phone</label>
+			<input type="text" name="address[phone]" class="form-control">
+		</div>
+	</div>
+</div>
+
+<div class="form-group is-required">
+	<label for="address">Address</label>
+	<textarea cols="30" id="address" name="address[street]" class="form-control" required></textarea>
+</div>
+
+<div id="partialLocations">
+	{% partial 'locations::default' %}
+</div>
+
+<div class="form-group">
+	<label for="address">Address Name</label>
+	<input type="text" name="address[address_name]" class="form-control">
+</div>
