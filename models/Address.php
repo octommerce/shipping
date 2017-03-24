@@ -65,4 +65,14 @@ class Address extends Model
 
         $this->save();
     }
+
+    /**
+     * Add scope to filter primary address
+     *
+     * @param Builder $query
+     */
+    public function scopeFilterPrimaryAddress($query)
+    {
+        $query->whereIsPrimary(true);
+    }
 }

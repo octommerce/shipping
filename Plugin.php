@@ -48,6 +48,10 @@ class Plugin extends PluginBase
             $model->hasMany['addresses'] = [
                 'Octommerce\Shipping\Models\Address',
             ];
+
+            $model->addDynamicMethod('primaryAddress', function() use ($model) {
+                return $model->addresses()->filterPrimaryAddress()->first();
+            });
         });
     }
 
