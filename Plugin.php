@@ -10,7 +10,7 @@ use System\Classes\PluginBase;
  */
 class Plugin extends PluginBase
 {
-    public $require = ['Octommerce.Octommerce'];
+    public $require = ['Octommerce.Octommerce', 'RainLab.User'];
 
     /**
      * Returns information about this plugin.
