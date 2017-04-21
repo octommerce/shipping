@@ -1,5 +1,6 @@
 <?php namespace Octommerce\Shipping\Classes;
 
+use Db;
 use Str;
 use URL;
 use File;
@@ -146,5 +147,21 @@ class CourierBase extends ModelBehavior
      * @param Model $cart Cart model object containing configuration fields values.
      */
     public function getShippingCost($data, $cart) { }
+
+    /**
+     * Get cost record by given location
+     *
+     * @param string $location
+     */
+    protected function getCostRecord($location)
+    {
+        return Db::table($this->table)
+            ->where('location', 'like', substr($location, 0, 2) . "%")
+            ->orWhere('location', 'like', substr($location, 3, 2) . "%")
+            ->orWhere('location', 'like', substr($location, 6, 2) . "%")
+            ->orWhere('location', 'like', substr($location, 9, 4) . "%")
+            ->orderByRaw('LENGTH(`location`) desc')
+            ->first();
+    }
 
 }

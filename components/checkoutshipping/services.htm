@@ -1,0 +1,26 @@
+{% if __SELF__.services %}
+<label>Select Service</label>
+<select name="service"
+        class="form-control"
+        data-request="{{ __SELF__ }}::onSelectService"
+        data-attach-loading
+        >
+        {% for service in services %}
+        <option value="{{ service.code }}">{{ service.name }}</option>
+        {% endfor %}
+</select>
+{% endif %}
+
+<div class="col-sm-12">
+    <div class="row">
+        <div class="col-xs-6">
+            Shipping price
+        </div>
+
+        <div class="col-xs-6 text-right">
+            <span class="text-danger h4" id="shipping-price">
+                
+            </span>
+        </div>
+    </div>
+</div>

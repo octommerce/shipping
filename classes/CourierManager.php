@@ -165,11 +165,15 @@ class CourierManager
     /**
      * Returns a gateway based on its unique alias.
      */
-    public function findByAlias($alias)
+    public function findByAlias($alias, $asInstance = false)
     {
         $couriers = $this->listCouriers(false);
         if (!isset($couriers[$alias]))
             return false;
+
+        if ($asInstance) {
+            return new $couriers[$alias]->class;
+        }
 
         return $couriers[$alias];
     }
