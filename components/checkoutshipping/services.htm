@@ -6,6 +6,7 @@
         data-request-update="'{{ __SELF__ }}::shipping-cost': '#shipping-cost'"
         data-attach-loading
         >
+        <option value="" disabled selected>Select service</option>
         {% for service in services %}
         <option value="{{ service.code }}">{{ service.name }}</option>
         {% endfor %}

@@ -6,6 +6,7 @@
             data-request-update="'{{ __SELF__ }}::services': '#courier-services'"
             data-attach-loading
             >
+            <option value="" disabled selected>Select courier</option>
             {% for courier in couriers %}
             <option value="{{ courier.alias }}">{{ courier.name }}</option>
             {% endfor %}
