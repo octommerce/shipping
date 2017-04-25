@@ -2,3 +2,6 @@
     - First version of Shipping
     - create_locations_table.php
     - create_addresses_table.php
+1.0.2:
+    - Add shipping_cost column to carts table
+    - add_shipping_cost_column_to_carts_table.php

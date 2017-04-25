@@ -3,6 +3,7 @@
 <select name="service"
         class="form-control"
         data-request="{{ __SELF__ }}::onSelectService"
+        data-request-update="'{{ __SELF__ }}::shipping-cost': '#shipping-cost'"
         data-attach-loading
         >
         {% for service in services %}
@@ -11,16 +12,6 @@
 </select>
 {% endif %}
 
-<div class="col-sm-12">
-    <div class="row">
-        <div class="col-xs-6">
-            Shipping price
-        </div>
-
-        <div class="col-xs-6 text-right">
-            <span class="text-danger h4" id="shipping-price">
-                
-            </span>
-        </div>
-    </div>
+<div id="shipping-cost">
+    {% partial __SELF__ ~ '::shipping-cost' %}
 </div>

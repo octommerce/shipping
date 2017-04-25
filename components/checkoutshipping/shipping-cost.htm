@@ -1,0 +1,15 @@
+{% if shippingCost %}
+<div class="col-sm-12">
+    <div class="row">
+        <div class="col-xs-6">
+            Shipping price
+        </div>
+
+        <div class="col-xs-6 text-right">
+            <span class="text-danger h4">
+                {{ shippingCost }}
+            </span>
+        </div>
+    </div>
+</div>
+{% endif %}

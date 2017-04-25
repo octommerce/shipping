@@ -4,6 +4,8 @@ use Lang;
 use Backend;
 use RainLab\User\Models\User;
 use System\Classes\PluginBase;
+use Octommerce\Octommerce\Models\Cart;
+use Octommerce\Octommerce\Models\Order;
 
 /**
  * Shipping Plugin Information File
@@ -52,6 +54,14 @@ class Plugin extends PluginBase
             $model->addDynamicMethod('primaryAddress', function() use ($model) {
                 return $model->addresses()->filterPrimaryAddress()->first();
             });
+        });
+
+        Cart::extend(function($cartModel) {
+            $cartModel->implement[] = 'Octommerce\Shipping\Behaviors\ShippingCost';
+        });
+
+        Order::extend(function($orderModel) {
+            $orderModel->implement[] = 'Octommerce\Shipping\Behaviors\ShippingCost';
         });
     }
 
