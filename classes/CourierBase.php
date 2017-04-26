@@ -156,10 +156,10 @@ class CourierBase extends ModelBehavior
     protected function getCostRecord($location)
     {
         return Db::table($this->table)
-            ->where('location', 'like', substr($location, 0, 2) . "%")
-            ->orWhere('location', 'like', substr($location, 3, 2) . "%")
-            ->orWhere('location', 'like', substr($location, 6, 2) . "%")
-            ->orWhere('location', 'like', substr($location, 9, 4) . "%")
+            ->where('location', '=', $location)
+            ->orWhere('location', 'like', substr($location, 0, 2))
+            ->orWhere('location', 'like', substr($location, 0, 5))
+            ->orWhere('location', 'like', substr($location, 0, 8))
             ->orderByRaw('LENGTH(`location`) desc')
             ->first();
     }
