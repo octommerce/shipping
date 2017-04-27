@@ -9,9 +9,11 @@ class ShippingCost extends \October\Rain\Extension\ExtensionBase
         $this->parent = $parent;
     }
 
-    public function addShippingCost($amount)
+    public function addShippingCost($data)
     {
-        $this->parent->shipping_cost = $amount;
+        $this->parent->shipping_cost = $data['cost'];
+        $this->parent->shipping_courier = $data['courier'];
+        $this->parent->shipping_service = $data['service'];
         $this->parent->save();
     }
 

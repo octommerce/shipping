@@ -5,3 +5,7 @@
 1.0.2:
     - Add shipping_cost column to carts table
     - add_shipping_cost_column_to_carts_table.php
+1.0.3:
+    - Add additional columns to orders and carts tables
+    - add_additional_columns_to_orders_table.php
+    - add_additional_columns_to_carts_table.php

@@ -9,7 +9,13 @@ class AddShippingCost
 
     public function handle($order, $data, $cart)
     {
-        $order->addShippingCost($cart->shipping_cost);
+        $shippingCost = [
+            'cost'    => $cart->shipping_cost,
+            'courier' => $cart->shipping_courier,
+            'service' => $cart->shipping_service,
+        ];
+
+        $order->addShippingCost($shippingCost);
     }
 
 }

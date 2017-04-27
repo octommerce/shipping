@@ -58,11 +58,15 @@ class CheckoutShipping extends ComponentBase
     public function onSelectService()
     {
         $cart = Cart::get();
-        $shippingCost = $this->getCourier()->getShippingCost(post(), $cart);
+        $shippingData = [
+            'cost'    => $this->getCourier()->getShippingCost(post(), $cart),
+            'courier' => post('courier'),
+            'service' => post('service')
+        ];
 
-        $cart->addShippingCost($shippingCost);
+        $cart->addShippingCost($shippingData);
 
-        $this->page['shippingCost'] = $shippingCost;
+        $this->page['shippingCost'] = $shippingData['cost'];
     }
 
     protected function loadCouriers()
