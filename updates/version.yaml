@@ -12,4 +12,6 @@
 1.0.4:
     - add is_cod column to orders table
     - add_is_cod_column_to_orders_table.php
-
+1.0.5: 
+    - Seed cod request status to order statuses table
+    - seed_cod_request_status_to_order_statuses_table.php

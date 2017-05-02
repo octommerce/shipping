@@ -1,0 +1,16 @@
+[
+    {
+        "code": "cod-request",
+        "name": "CoD Request",
+        "description": "CoD request",
+        "color": null,
+        "is_active": 1,
+        "send_email": 1,
+        "send_email_to_admin": 1,
+        "attach_pdf": 0,
+        "mail_template_id": null,
+        "admin_mail_template_id": null,
+        "sort_order": 4,
+        "parent_code": null
+    }
+]
