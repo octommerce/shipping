@@ -47,7 +47,15 @@ class CheckoutShipping extends ComponentBase
 
     public function prepareVars()
     {
-        $this->couriers = $this->page['couriers'] = $this->loadCouriers();
+    }
+
+    public function onSelectPaymentMethod()
+    {
+        $isCod = post('is_cod');
+
+        $this->page['couriers'] = $this->loadCouriers(true, $isCod)->filter(function($courier) use ($isCod) {
+            return $courier->object->isCod() == $isCod || is_null($isCod);
+        });
     }
 
     public function onSelectCourier()

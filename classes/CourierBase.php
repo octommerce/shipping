@@ -14,6 +14,8 @@ class CourierBase extends ModelBehavior
 {
     use \System\Traits\ConfigMaker;
 
+    protected $is_cod = false;
+
     protected $orderModel = 'Octommerce\Octommerce\Models\Order';
 
     protected $orderStatusModel = 'Octommerce\Octommerce\Models\OrderStatus';
@@ -162,6 +164,16 @@ class CourierBase extends ModelBehavior
             ->orWhere('location', 'like', substr($location, 0, 8))
             ->orderByRaw('LENGTH(`location`) desc')
             ->first();
+    }
+
+    /**
+     * Get the is_cod property
+     *
+     * @return boolean $is_cod
+     */
+    public function isCod()
+    {
+        return $this->is_cod;
     }
 
 }

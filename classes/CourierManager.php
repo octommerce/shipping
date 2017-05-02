@@ -112,7 +112,7 @@ class CourierManager
     /**
      * Returns a list of the payment gateway classes.
      * @param boolean $asObject As a collection with extended information found in the class object.
-     * @return array
+     * @return mixed
      */
     public function listCouriers($asObject = true)
     {
@@ -145,21 +145,6 @@ class CourierManager
         }
 
         return new Collection($collection);
-    }
-
-    /**
-     * Returns a list of the payment gateway objects
-     * @return array
-     */
-    public function listCourierObjects()
-    {
-        $collection = [];
-        $couriers = $this->listCouriers();
-        foreach ($couriers as $courier) {
-            $collection[$courier->alias] = $courier->object;
-        }
-
-        return $collection;
     }
 
     /**
