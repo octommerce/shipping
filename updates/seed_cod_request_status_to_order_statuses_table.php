@@ -8,7 +8,7 @@ class SeedCodRequestStatusToOrderStatusesTable extends Seeder
 {
     public function run()
     {
-        $statuses = json_decode(file_get_contents(storage_path() . '/database/cod_status.json'), true);
+        $statuses = json_decode(file_get_contents(plugins_path('octommerce/shipping/database/cod_status.json')), true);
 
         Model::unguard();
 
