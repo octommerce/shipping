@@ -6,6 +6,8 @@ use RainLab\User\Models\User;
 use System\Classes\PluginBase;
 use Octommerce\Octommerce\Models\Cart;
 use Octommerce\Octommerce\Models\Order;
+use Octommerce\Octommerce\Models\OrderStatusLog;
+use Octommerce\Octommerce\Controllers\Orders as OrderController;
 
 /**
  * Shipping Plugin Information File
@@ -62,6 +64,16 @@ class Plugin extends PluginBase
 
         Order::extend(function($orderModel) {
             $orderModel->implement[] = 'Octommerce\Shipping\Behaviors\ShippingCost';
+        });
+
+        OrderController::extendFormFields(function($form, $model, $context) {
+            if ( ! $model instanceof OrderStatusLog) return;
+
+            $form->addFields([
+                'awb' => [
+                    'label' => 'AWB',
+                ]
+            ]);
         });
     }
 
