@@ -3,12 +3,12 @@
 use Octommerce\Octommerce\Models\OrderStatusLog;
 use Octommerce\Octommerce\Models\OrderStatus;
 
-class MarkAsCod 
+class MarkAsCod
 {
 
     public function handle($order, $data, $cart)
     {
-        if ($data['is_cod'] == false) return;
+        if (isset($data['is_cod']) && $data['is_cod'] == false) return;
 
         $order->is_cod = true;
         $order->save();
