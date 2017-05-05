@@ -72,6 +72,11 @@ class Plugin extends PluginBase
             $form->addFields([
                 'awb' => [
                     'label' => 'AWB',
+                    'trigger' => [
+                        'action'    => 'show',
+                        'field'     => 'status',
+                        'condition' => 'value[shipped]',
+                    ]
                 ]
             ]);
         });
