@@ -154,7 +154,7 @@ class CourierManager
     {
         $couriers = $this->listCouriers(false);
         if (!isset($couriers[$alias]))
-            return false;
+            return;
 
         if ($asInstance) {
             return new $couriers[$alias]->class;
