@@ -166,6 +166,11 @@ class CourierBase extends ModelBehavior
             ->first();
     }
 
+    public function findServiceColumnByCode($service)
+    {
+        throw new \Exception('Please define this method to get service columns');
+    }
+
     /**
      * Get the is_cod property
      *

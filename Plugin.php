@@ -38,7 +38,7 @@ class Plugin extends PluginBase
      */
     public function register()
     {
-
+        $this->registerConsoleCommand('shipping.dummy-cost', 'Octommerce\Shipping\Console\DummyCost');
     }
 
     /**
