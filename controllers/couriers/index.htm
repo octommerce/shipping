@@ -1,0 +1,41 @@
+<?= Form::open(['class' => 'layout']) ?>
+<div class="control-tabs primary-tabs" data-control="tab">
+    <ul class="nav nav-tabs">
+        <?php $i = 0 ?>
+
+        <?php foreach ($couriers as $code => $courier): ?>
+
+            <li class="<?= $i == 0 ? 'active' : '' ?>"><a href="#courier-<?= $code ?>"><?= $courier->name ?></a></li>
+            <?php $i++ ?>
+
+        <?php endforeach ?>
+    </ul>
+    <div class="tab-content">
+        <?php $i = 0 ?>
+
+        <?php foreach ($couriers as $code => $courier): ?>
+            <div class="tab-pane <?= $i == 0 ? 'active' : '' ?>">
+
+                    <?= $this->formRender($code) ?>
+
+                </div>
+            </div>
+            <?php $i++ ?>
+        <?php endforeach ?>
+    </div>
+
+    <div class="form-buttons">
+        <div class="loading-indicator-container">
+            <button
+            type="submit"
+            data-request="onSave"
+            data-hotkey="ctrl+s, cmd+s"
+            data-load-indicator="Creating Payment Method..."
+            class="btn btn-primary">
+            Save
+        </button>
+    </div>
+
+</div>
+
+<?= Form::close() ?>
