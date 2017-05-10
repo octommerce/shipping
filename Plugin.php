@@ -17,21 +17,6 @@ class Plugin extends PluginBase
     public $require = ['Octommerce.Octommerce', 'RainLab.User'];
 
     /**
-     * Returns information about this plugin.
-     *
-     * @return array
-     */
-    public function pluginDetails()
-    {
-        return [
-            'name'        => Lang::get('octommerce.shipping::lang.name'),
-            'description' => Lang::get('octommerce.shipping::lang.description'),
-            'author'      => 'Octommerce',
-            'icon'        => 'icon-leaf'
-        ];
-    }
-
-    /**
      * Register method, called when the plugin is first registered.
      *
      * @return void
@@ -81,44 +66,6 @@ class Plugin extends PluginBase
                 ]
             ]);
         });
-    }
-
-    /**
-     * Registers any back-end permissions used by this plugin.
-     *
-     * @return array
-     */
-    public function registerPermissions()
-    {
-        return []; // Remove this line to activate
-
-        return [
-            'octommerce.shipping.some_permission' => [
-                'tab' => 'Shipping',
-                'label' => 'Some permission'
-            ],
-        ];
-    }
-
-    /**
-     * Registers back-end navigation items for this plugin.
-     *
-     * @return array
-     */
-    public function registerNavigation()
-    {
-        return [
-            'shipping' => [
-                'label'       => 'Shipping',
-                'url'         => Backend::url('octommerce/shipping/mycontroller'),
-                'icon'        => 'icon-leaf',
-                'permissions' => ['octommerce.shipping.*'],
-                'order'       => 500,
-                'sideMenu' => [
-
-                ]
-            ],
-        ];
     }
 
     /**

@@ -1,0 +1,25 @@
+plugin:
+    name: 'octommerce.shipping::lang.name'
+    description: 'octommerce.shipping::lang.description'
+    author: 'Octommerce'
+    icon: icon-truck
+    homepage: 'http://octommerce.com'
+navigation:
+    shipping:
+        label: Shipping
+        url: octommerce/shipping/couriers
+        icon: icon-truck
+        permissions:
+            - octommerce.shipping.*
+        order: '400'
+        sideMenu:
+            couriers:
+                label: Couriers
+                url: octommerce/shipping/couriers
+                icon: icon-truck
+                permissions:
+                    - octommerce.shipping.access_couriers
+permissions:
+    octommerce.shipping.access_couriers:
+        tab: Couriers
+        label: 'Access Couriers'
