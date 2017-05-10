@@ -64,6 +64,7 @@ class Plugin extends PluginBase
 
         Order::extend(function($orderModel) {
             $orderModel->implement[] = 'Octommerce\Shipping\Behaviors\ShippingCost';
+            $orderModel->implement[] = 'Octommerce\Shipping\Behaviors\ShippingDetails';
         });
 
         OrderController::extendFormFields(function($form, $model, $context) {
