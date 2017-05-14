@@ -9,14 +9,14 @@ class AddShippingDetailsToOrder
 
     public function handle($order, $data, $cart)
     {
-        $shippingDetails = [
-            'address_id'    => $data['selected_address_id'],
-            'location_code' => $data['location'],
-            'latitude'      => $data['latitude'],
-            'longitude'     => $data['longitude']
-        ];
+        if ($order->address) {
+            $order->shipping_address = $order->address->street;
+            $order->shipping_location_code = $order->address->location_code;
+            $order->shipping_latitude = $order->address->latitude;
+            $order->shipping_longitude = $order->address->longitude;
 
-        $order->addShippingDetails($shippingDetails);
+            $order->save();
+        }
     }
 
 }

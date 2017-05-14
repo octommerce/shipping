@@ -2,6 +2,7 @@
 
 use Model;
 use Seeder;
+use Exception;
 use Octommerce\Octommerce\Models\OrderStatus;
 
 class SeedCodRequestStatusToOrderStatusesTable extends Seeder
@@ -13,7 +14,10 @@ class SeedCodRequestStatusToOrderStatusesTable extends Seeder
         Model::unguard();
 
         foreach($statuses as $status) {
-            OrderStatus::create($status);
+            try {
+                OrderStatus::create($status);
+            }
+            catch (Exception $e) {}
         }
 
         Model::reguard();

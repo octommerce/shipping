@@ -1,6 +1,7 @@
 <?php namespace Octommerce\Shipping;
 
 use Lang;
+use Event;
 use Backend;
 use RainLab\User\Models\User;
 use System\Classes\PluginBase;
@@ -49,7 +50,19 @@ class Plugin extends PluginBase
 
         Order::extend(function($orderModel) {
             $orderModel->implement[] = 'Octommerce\Shipping\Behaviors\ShippingCost';
-            $orderModel->implement[] = 'Octommerce\Shipping\Behaviors\ShippingDetails';
+
+            $orderModel->addFillable([
+                'shipping_address_id',
+                'shipping_location_code',
+                'shipping_latitude',
+                'shipping_longitude',
+            ]);
+
+            $orderModel->belongsTo['address'] = [
+                'Octommerce\Shipping\Models\Address',
+                'key' => 'shipping_address_id',
+                'otherKey' => 'id',
+            ];
         });
 
         OrderController::extendFormFields(function($form, $model, $context) {
@@ -66,6 +79,17 @@ class Plugin extends PluginBase
                 ]
             ]);
         });
+
+        /* Event::listen('order.afterCreate', function($order, $data, $cart) { */
+        /*     if ($order->address) { */
+        /*         $order->shipping_address = $order->address->street; */
+        /*         $order->shipping_location_code = $order->address->location_code; */
+        /*         $order->shipping_latitude = $order->address->latitude; */
+        /*         $order->shipping_longitude = $order->address->longitude; */
+
+        /*         $order->save(); */
+        /*     } */
+        /* }); */
     }
 
     /**
