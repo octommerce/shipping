@@ -64,6 +64,7 @@ class Locations extends ComponentBase
 
         $address = Address::create($data);
 
+        $this->page['address'] = $address;
         $this->page['addresses'] = $this->loadAddresses();
 
         Flash::success('Alamat berhasil ditambahkan');
