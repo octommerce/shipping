@@ -28,6 +28,9 @@ class Locations extends ComponentBase
 
     public function loadAddresses()
     {
+        if (! Auth::check())
+            return [];
+    
         return Address::whereUserId($this->getUser()->id)->get();
     }
 
