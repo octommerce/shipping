@@ -1,5 +1,7 @@
 <?php namespace Octommerce\Shipping\Behaviors;
 
+use Octommerce\Shipping\Classes\CourierManager;
+
 class ShippingCost extends \October\Rain\Extension\ExtensionBase
 {
     protected $parent;
@@ -15,6 +17,20 @@ class ShippingCost extends \October\Rain\Extension\ExtensionBase
         $this->parent->shipping_courier = $data['courier'];
         $this->parent->shipping_service = $data['service'];
         $this->parent->save();
+    }
+
+    public function setShipping($courier, $service, $data = [])
+    {
+        $courierManager = CourierManager::instance();
+        $courierInstance = $courierManager->findByAlias($courier);
+
+        $shippingData = [
+            'cost'    => $courierInstance->getShippingCost($data, $this),
+            'courier' => $courier,
+            'service' => $service,
+        ];
+
+        $this->addShippingCost($shippingData);
     }
 
 }

@@ -7,8 +7,6 @@ use Octommerce\Shipping\Classes\CourierManager;
 
 class CheckoutShipping extends ComponentBase
 {
-    public $parentComponent = 'Octommerce\Octommerce\Components\Checkout';
-
     public $couriers;
 
     public $services;
@@ -25,12 +23,6 @@ class CheckoutShipping extends ComponentBase
 
     public function init()
     {
-        $this->addComponent(
-            'Octommerce\Octommerce\Components\Checkout',
-            'checkout',
-            []
-        );
-
         $this->addComponent(
             'Octommerce\Shipping\Components\Locations',
             'locations',
@@ -65,14 +57,9 @@ class CheckoutShipping extends ComponentBase
 
     public function onSelectService()
     {
-        $cart = Cart::get();
-        $shippingData = [
-            'cost'    => $this->getCourier()->getShippingCost(post(), $cart),
-            'courier' => post('courier'),
-            'service' => post('service')
-        ];
+        $this->page['cart'] = $cart = Cart::get();
 
-        $cart->addShippingCost($shippingData);
+        $cart->setShipping(post('courier'), post('service'), post());
 
         $this->page['shippingCost'] = $shippingData['cost'];
     }
