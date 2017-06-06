@@ -53,6 +53,27 @@ class Location extends Model
         return self::$nameList[$locationCode] = self::where('code', 'LIKE', $arg)->orderBy('name')->lists('name', 'code');
     }
 
+    public function getParentAttribute()
+    {
+        $codes = explode('.', $this->code);
+
+        if (count($codes) <= 1) return null;
+
+        array_pop($codes);
+
+        return self::find(implode('.', $codes));
+    }
+
+    public function children()
+    {
+        return self::where('code', 'like', $this->code . '%');
+    }
+
+    public function getChildrenAttribute()
+    {
+        return $this->children()->get();
+    }
+
     public static function getArgument($locationCode)
     {
         $arg = '';
