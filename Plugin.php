@@ -58,7 +58,7 @@ class Plugin extends PluginBase
                 'shipping_longitude',
             ]);
 
-            $orderModel->belongsTo['address'] = [
+            $orderModel->belongsTo['shipping_address'] = [
                 'Octommerce\Shipping\Models\Address',
                 'key' => 'shipping_address_id',
                 'otherKey' => 'id',
