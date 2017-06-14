@@ -1,5 +1,6 @@
 <?php namespace Octommerce\Shipping\Behaviors;
 
+use ApplicationException;
 use Octommerce\Shipping\Classes\CourierManager;
 
 class ShippingCost extends \October\Rain\Extension\ExtensionBase
@@ -22,7 +23,11 @@ class ShippingCost extends \October\Rain\Extension\ExtensionBase
     public function setShipping($courier, $service, $data = [])
     {
         $courierManager = CourierManager::instance();
-        $courierInstance = $courierManager->findByAlias($courier);
+        $courierInstance = $courierManager->findByAlias($courier, true);
+
+        if (! $courierInstance) {
+            throw new ApplicationException('Courier \'' . $courier . '\' not found.');
+        }
 
         $shippingData = [
             'cost'    => $courierInstance->getShippingCost($data, $this),
