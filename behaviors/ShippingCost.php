@@ -30,12 +30,14 @@ class ShippingCost extends \October\Rain\Extension\ExtensionBase
         }
 
         $shippingData = [
-            'cost'    => $courierInstance->getShippingCost($data, $this),
+            'cost'    => $courierInstance->getShippingCost($data, $this->parent),
             'courier' => $courier,
             'service' => $service,
         ];
 
         $this->addShippingCost($shippingData);
+
+        return $shippingData;
     }
 
 }
