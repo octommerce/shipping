@@ -3,7 +3,7 @@
 class CheckIsShippingSelected
 {
 
-    public function handle($order, $data)
+    public function handle($cart, $data)
     {
         //TODO: Validate if there is no active shipping method
 
