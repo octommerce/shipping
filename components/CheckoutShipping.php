@@ -59,7 +59,7 @@ class CheckoutShipping extends ComponentBase
     {
         $this->page['cart'] = $cart = Cart::get();
 
-        $cart->setShipping(post('courier'), post('service'), post());
+        $shippingData = $cart->setShipping(post('courier'), post('service'), post());
 
         $this->page['shippingCost'] = $shippingData['cost'];
     }
