@@ -146,8 +146,8 @@ class Locations extends ComponentBase
     {
         
         $rules = [
-            'address_name'  => 'required|min:3|alpha',
-            'name'          => 'required|min:3|alpha',
+            'address_name'  => ['required', 'min:3', 'regex:/^[a-z A-Z]+$/'],
+            'name'          => ['required', 'min:3', 'regex:/^[a-z A-Z]+$/'],
             'street'        => 'required|min:30|string',
             'phone'         => ['required', 'regex:/^(?:\+?62[^0]|0[^0])[0-9]{9,10}$/'],
             'location_code' => 'required',
