@@ -2,6 +2,8 @@
 
 use Auth;
 use Flash;
+use Validator;
+use ApplicationException;
 use Cms\Classes\ComponentBase;
 use Octommerce\Shipping\Models\Address;
 
@@ -43,6 +45,12 @@ class Locations extends ComponentBase
     {
         if ( ! $user = $this->getUser()) {
             return;
+        }
+
+        $validator = $this->getValidator();
+
+        if ($validator->fails()) {
+            throw new ApplicationException($validator->messages()->first());
         }
 
         if (post('address_id')) {
@@ -132,6 +140,24 @@ class Locations extends ComponentBase
         }
 
         return $user;
+    }
+
+    protected function getValidator()
+    {
+        
+        $rules = [
+            'address_name'  => 'required|min:3|alpha',
+            'name'          => 'required|min:3|alpha',
+            'street'        => 'required|min:30|string',
+            'phone'         => ['required', 'regex:/^(?:\+?62[^0]|0[^0])[0-9]{9,10}$/'],
+            'location_code' => 'required',
+        ];
+
+        $messages = [
+            'location_code.required' => 'The subdistrict field is required.'
+        ];
+
+        return Validator::make(post(), $rules, $messages);
     }
 
 }
