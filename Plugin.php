@@ -50,6 +50,7 @@ class Plugin extends PluginBase
 
         Order::extend(function($orderModel) {
             $orderModel->implement[] = 'Octommerce\Shipping\Behaviors\ShippingCost';
+            $orderModel->implement[] = 'Octommerce\Shipping\Behaviors\ShippingDetails';
 
             $orderModel->addFillable([
                 'shipping_address_id',
@@ -58,7 +59,7 @@ class Plugin extends PluginBase
                 'shipping_longitude',
             ]);
 
-            $orderModel->belongsTo['shipping_address'] = [
+            $orderModel->belongsTo['os_shipping_address'] = [
                 'Octommerce\Shipping\Models\Address',
                 'key' => 'shipping_address_id',
                 'otherKey' => 'id',
