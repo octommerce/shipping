@@ -50,7 +50,9 @@ class Location extends Model
 
         $arg = self::getArgument($locationCode);
 
-        return self::$nameList[$locationCode] = self::where('code', 'LIKE', $arg)->orderBy('name')->lists('name', 'code');
+        return self::$nameList[$locationCode] = self::where('code', 'LIKE', $arg)
+            ->orderBy('name')
+            ->lists('name', 'code');
     }
 
     public function getParentAttribute()
@@ -61,7 +63,7 @@ class Location extends Model
 
         array_pop($codes);
 
-        return self::find(implode('.', $codes));
+        return self::whereCode(implode('.', $codes))->first();
     }
 
     public function children()
