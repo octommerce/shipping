@@ -54,6 +54,24 @@ class Address extends Model
     public $attachOne = [];
     public $attachMany = [];
 
+    public function beforeCreate()
+    {
+        if (! $this->name) {
+            $this->name = $this->user->name;
+        }
+
+        if (! $this->phone) {
+            $this->phone = $this->user->phone;
+        }
+    }
+
+    public function setPhoneAttribute($value)
+    {
+        if ($value) return;
+
+        $this->attributes['phone'] = $this->user->phone;
+    }
+
     /**
      * Set the address to primary
      */
