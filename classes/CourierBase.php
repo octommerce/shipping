@@ -158,12 +158,32 @@ class CourierBase extends ModelBehavior
     protected function getCostRecord($location)
     {
         return Db::table($this->table)
-            ->where('location', '=', $location)
-            ->orWhere('location', 'like', substr($location, 0, 2))
-            ->orWhere('location', 'like', substr($location, 0, 5))
-            ->orWhere('location', 'like', substr($location, 0, 8))
+            ->where('location', '=', $this->getCodeByLevel($location, 1))
+            ->orWhere('location', 'like', $this->getCodeByLevel($location, 2)) 
+            ->orWhere('location', 'like', $this->getCodeByLevel($location, 3))
+            ->orWhere('location', 'like', $this->getCodeByLevel($location, 4))
             ->orderByRaw('LENGTH(`location`) desc')
             ->first();
+    }
+
+    /**
+     * Get location code by given level
+     * 1. Province
+     * 2. Regency/City
+     * 3. District 
+     * 4. Village
+     *
+     * @param string $locationCode
+     * @param int $level
+     * @return string 
+     */
+    public function getCodeByLevel($locationCode, $level)
+    {
+        $pattern = implode(array_fill(0, $level, '[0-9]+'), '.');
+
+        preg_match("/^$pattern/", $locationCode, $matches);
+
+        return ($arg = array_shift($matches)) != null ? $arg : '';
     }
 
     public function findServiceColumnByCode($service)
