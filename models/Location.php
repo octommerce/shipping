@@ -50,7 +50,7 @@ class Location extends Model
 
         $arg = self::getArgument($locationCode);
 
-        return self::$nameList[$locationCode] = self::where('code', 'LIKE', $arg)
+        return self::$nameList[$locationCode] = self::whereRaw("code REGEXP '$arg'")
             ->orderBy('name')
             ->lists('name', 'code');
     }
@@ -78,21 +78,9 @@ class Location extends Model
 
     public static function getArgument($locationCode)
     {
-        $arg = '';
+        if ($locationCode == 'base') return '^[0-9]+$';
 
-        switch (strlen($locationCode)) {
-            case 2:
-            case 5:
-                $arg = $locationCode . '.__';
-                break;
-            case 8:
-                $arg = $locationCode . '.____';
-                break;
-            default:
-                $arg = '__';
-        }
-
-        return $arg;
+        return "^{$locationCode}.[0-9]+$";
     }
 
     public static function formSelectProvince($name, $selectedValue = null, $options = [])
