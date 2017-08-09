@@ -5,6 +5,7 @@ use Str;
 use URL;
 use File;
 use System\Classes\ModelBehavior;
+use Octommerce\Shipping\Helpers\Location as LocationHelper;
 
 /**
  * Represents the generic courier.
@@ -179,11 +180,7 @@ class CourierBase extends ModelBehavior
      */
     public function getCodeByLevel($locationCode, $level)
     {
-        $pattern = implode(array_fill(0, $level, '[0-9]+'), '.');
-
-        preg_match("/^$pattern/", $locationCode, $matches);
-
-        return ($arg = array_shift($matches)) != null ? $arg : '';
+        return LocationHelper::codeByLevel($locationCode, $level);
     }
 
     public function findServiceColumnByCode($service)

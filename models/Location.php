@@ -2,6 +2,7 @@
 
 use Model;
 use Form;
+use Octommerce\Shipping\Helpers\Location as LocationHelper;
 
 /**
  * Location Model
@@ -105,28 +106,28 @@ class Location extends Model
 
     public function getProvinceAttribute()
     {
-        $arg = substr($this->code, 0, 2);
+        $arg = LocationHelper::codeByLevel($this->code, 1);
 
         return self::where('code', $arg)->first();
     }
 
     public function getCityAttribute()
     {
-        $arg = substr($this->code, 0, 5);
+        $arg = LocationHelper::codeByLevel($this->code, 2);
 
         return self::where('code', $arg)->first();
     }
 
     public function getDistrictAttribute()
     {
-        $arg = substr($this->code, 0, 8);
+        $arg = LocationHelper::codeByLevel($this->code, 3);
 
         return self::where('code', $arg)->first();
     }
 
     public function getSubdistrictAttribute()
     {
-        $arg = $this->code;
+        $arg = LocationHelper::codeByLevel($this->code, 4);
 
         return self::where('code', $arg)->first();
     }
