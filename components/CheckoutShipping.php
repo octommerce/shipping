@@ -52,7 +52,19 @@ class CheckoutShipping extends ComponentBase
 
     public function onSelectCourier()
     {
-        $this->services = $this->page['services'] = $this->loadServices();
+        $isCod = post('is_cod');
+
+        /**
+         * Only load services if it comes from non COD courier
+         **/
+        if ($isCod != 1 || is_null($isCod)) {
+            return $this->services = $this->page['services'] = $this->loadServices();
+        }
+
+        /**
+         * COD doesn't have any service, so just put in the shipping details to cart
+         **/
+        Cart::get()->setShipping(post('courier'), post('service'), post());
     }
 
     public function onSelectService()
