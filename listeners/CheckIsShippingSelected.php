@@ -11,6 +11,11 @@ class CheckIsShippingSelected
             throw new \ApplicationException('Shipping method not selected!');
         }
 
+        /**
+         * User has selected COD and courier
+         **/
+        if ($data['is_cod'] == 1 && isset($data['courier'])) return;
+
         if ( ! isset($data['courier']) || ! isset($data['service'])) {
             throw new \ApplicationException('Courier service not selected!');
         }
