@@ -1,5 +1,7 @@
 <?php namespace Octommerce\Shipping\Listeners;
 
+use ApplicationException;
+
 class CheckIsShippingSelected
 {
 
@@ -8,16 +10,11 @@ class CheckIsShippingSelected
         //TODO: Validate if there is no active shipping method
 
         if ( ! isset($data['is_cod'])) {
-            throw new \ApplicationException('Shipping method not selected!');
+            throw new ApplicationException('Shipping method not selected!');
         }
 
-        /**
-         * User has selected COD and courier
-         **/
-        if ($data['is_cod'] == 1 && isset($data['courier'])) return;
-
-        if ( ! isset($data['courier']) || ! isset($data['service'])) {
-            throw new \ApplicationException('Courier service not selected!');
+        if (is_null($cart->shipping_courier)) {
+            throw new ApplicationException('You have to choose a support shipping courier');
         }
     }
 
