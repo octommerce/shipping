@@ -1,6 +1,7 @@
 <?php namespace Octommerce\Shipping\Components;
 
 use Cart;
+use ApplicationException;
 use Cms\Classes\ComponentBase;
 use Octommerce\Octommerce\Components\Checkout;
 use Octommerce\Shipping\Classes\CourierManager;
@@ -53,6 +54,10 @@ class CheckoutShipping extends ComponentBase
     public function onSelectCourier()
     {
         $isCod = post('is_cod');
+
+        if (is_null(array_get(post(), 'shipping_location_code'))) {
+            throw new ApplicationException('You have not specified a destination address');
+        }
 
         /**
          * Only load services if it comes from non COD courier
