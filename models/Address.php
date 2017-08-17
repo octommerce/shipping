@@ -7,6 +7,7 @@ use Model;
  */
 class Address extends Model
 {
+    use \October\Rain\Database\Traits\Validation;
 
     /**
      * @var string The database table used by the model.
@@ -30,6 +31,13 @@ class Address extends Model
         'street',
         'latitude',
         'longitude'
+    ];
+
+    /**
+     * Validation rules
+     */
+    public $rules = [
+        'street' => 'required|min:20|string',
     ];
 
     /**
@@ -63,6 +71,15 @@ class Address extends Model
         if (! $this->phone) {
             $this->phone = $this->user->phone;
         }
+
+        if (! $this->user->addresses()->primary()->count()) {
+            $this->is_primary = true;
+        }
+    }
+
+    public function afterDelete()
+    {
+        //TODO: If it's primary, set the replacement
     }
 
     public function setPhoneAttribute($value)
@@ -89,7 +106,7 @@ class Address extends Model
      *
      * @param Builder $query
      */
-    public function scopeFilterPrimaryAddress($query)
+    public function scopePrimary($query)
     {
         $query->whereIsPrimary(true);
     }

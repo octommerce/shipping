@@ -40,7 +40,7 @@ class Plugin extends PluginBase
             ];
 
             $model->addDynamicMethod('primaryAddress', function() use ($model) {
-                return $model->addresses()->filterPrimaryAddress()->first();
+                return $model->addresses()->primary()->first();
             });
         });
 
