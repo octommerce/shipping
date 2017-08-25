@@ -32,7 +32,7 @@ class Locations extends ComponentBase
     {
         if (! Auth::check())
             return [];
-    
+
         return Address::whereUserId($this->getUser()->id)->get();
     }
 
@@ -47,38 +47,24 @@ class Locations extends ComponentBase
             return;
         }
 
-        $validator = $this->getValidator();
-
-        if ($validator->fails()) {
-            throw new ApplicationException($validator->messages()->first());
-        }
-
         if (post('address_id')) {
             $address = Address::whereId(post('address_id'))->whereUserId($user->id)->first();
 
-            if ( ! $address) {
-                throw new \ApplicationException('Address not found.');
+            if (! $address) {
+                throw new ApplicationException('Address not found');
             }
-
-            $address->fill(post());
-
-            $address->save();
-
-            $this->page['addresses'] = $this->loadAddresses();
-
-            Flash::success('Alamat berhasil diubah');
-
-            return;
+        } else {
+            $address = Address::make(['user_id' => Auth::getUser()->id]);
         }
 
-        $data = array_merge(post(), ['user_id' => Auth::getUser()->id]);
+        $address->fill(post());
 
-        $address = Address::create($data);
+        Flash::success($address->id ? 'Address changed' : 'New address created');
+
+        $address->save();
 
         $this->page['address'] = $address;
         $this->page['addresses'] = $this->loadAddresses();
-
-        Flash::success('Alamat berhasil ditambahkan');
     }
 
     public function onDelete()
@@ -141,23 +127,4 @@ class Locations extends ComponentBase
 
         return $user;
     }
-
-    protected function getValidator()
-    {
-        
-        $rules = [
-            'address_name'  => ['required', 'min:3', 'regex:/^[a-z A-Z]+$/'],
-            'name'          => ['min:3', 'regex:/^[a-z A-Z]+$/'],
-            'street'        => 'required|min:30|string',
-            'phone'         => ['regex:/^(?:\+?62[^0]|0[^0])[0-9]{9,10}$/'],
-            'location_code' => 'required',
-        ];
-
-        $messages = [
-            'location_code.required' => 'The subdistrict field is required.'
-        ];
-
-        return Validator::make(post(), $rules, $messages);
-    }
-
 }

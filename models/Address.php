@@ -7,6 +7,7 @@ use Model;
  */
 class Address extends Model
 {
+    use \October\Rain\Database\Traits\Validation;
 
     /**
      * @var string The database table used by the model.
@@ -33,6 +34,24 @@ class Address extends Model
     ];
 
     /**
+     * Validation rules
+     */
+    public $rules = [
+        'address_name'  => ['required', 'min:3', 'regex:/^[a-z A-Z]+$/'],
+        'name'          => ['min:3', 'regex:/^[a-z A-Z]+$/'],
+        'street'        => 'required|min:20|string',
+        'phone'         => ['regex:/^(?:\+?62[^0]|0[^0])[0-9]{9,10}$/'],
+        'location_code' => 'required',
+    ];
+
+    /**
+     * @var array The array of custom error messages.
+     */
+    public $customMessages = [
+        'location_code.required' => 'The subdistrict field is required.'
+    ];
+
+    /**
      * @var array Relations
      */
     public $hasOne = [];
@@ -53,6 +72,18 @@ class Address extends Model
     public $morphMany = [];
     public $attachOne = [];
     public $attachMany = [];
+
+    public function beforeCreate()
+    {
+        if ( ! \Auth::getUser()->addresses()->primary()->count()) {
+            $this->is_primary = true;
+        }
+    }
+
+    public function afterDelete()
+    {
+        //TODO: If it's primary, set the replacement
+    }
 
     public function setNameAttribute($value)
     {
@@ -81,7 +112,7 @@ class Address extends Model
      *
      * @param Builder $query
      */
-    public function scopeFilterPrimaryAddress($query)
+    public function scopePrimary($query)
     {
         $query->whereIsPrimary(true);
     }
