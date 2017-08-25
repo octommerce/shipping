@@ -54,22 +54,14 @@ class Address extends Model
     public $attachOne = [];
     public $attachMany = [];
 
-    public function beforeCreate()
+    public function setNameAttribute($value)
     {
-        if (! $this->name) {
-            $this->name = $this->user->name;
-        }
-
-        if (! $this->phone) {
-            $this->phone = $this->user->phone;
-        }
+        $this->attributes['name'] = !empty($value) ? $value : \Auth::getUser()->name;
     }
 
     public function setPhoneAttribute($value)
     {
-        if ($value) return;
-
-        $this->attributes['phone'] = $this->user->phone;
+        $this->attributes['phone'] = !empty($value) ? $value : \Auth::getUser()->phone;
     }
 
     /**
