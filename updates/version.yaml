@@ -18,3 +18,6 @@
 1.0.6:
     - Add shipping columns to orders table
     - add_shipping_columns_to_orders_table.php
+1.0.7:
+    - Add postcode to addresses table
+    - add_postcode_to_addresses_table.php

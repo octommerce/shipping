@@ -29,6 +29,7 @@ class Address extends Model
         'name',
         'phone',
         'street',
+        'postcode',
         'latitude',
         'longitude'
     ];
