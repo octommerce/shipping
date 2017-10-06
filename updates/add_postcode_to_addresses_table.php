@@ -16,7 +16,7 @@ class AddPostcodeToAddressesTable extends Migration
     public function down()
     {
         Schema::table('octommerce_shipping_addresses', function(Blueprint $table) {
-            $table->dropColumn('postcode', 10);
+            $table->dropColumn('postcode');
         });
     }
 }
