@@ -13,6 +13,10 @@ class CheckIsShippingSelected
             throw new ApplicationException('Shipping method not selected!');
         }
 
+        if ( ($courier = array_get($data, 'courier')) && ($service = array_get($data, 'service')) ) {
+            $cart->setShipping($courier, $service, $data);
+        }
+
         if (is_null($cart->shipping_courier)) {
             throw new ApplicationException('You have to choose a support shipping courier');
         }
